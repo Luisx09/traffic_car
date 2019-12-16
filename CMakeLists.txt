@@ -93,5 +93,5 @@ include_directories(
 #   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 # )
 
-catkin_install_python(PROGRAMS bin/pid_car
+catkin_install_python(PROGRAMS bin/line_car
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
