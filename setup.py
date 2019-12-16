@@ -5,7 +5,7 @@ from catkin_pkg.python_setup import generate_distutils_setup
 
 # fetch values from package.xml
 setup_args = generate_distutils_setup(
-    packages=['car_control','img_proc', 'pid_car'],
+    packages=['line_car'],
     package_dir={'': 'src'},
 )
 
