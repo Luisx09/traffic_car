@@ -1,0 +1,9 @@
+#! /usr/bin/env python
+
+import line_car.drive as car
+
+if __name__ == '__main__':
+    try:
+        car.main()
+    except rospy.ROSInterruptException:
+        car.estop()
