@@ -9,8 +9,8 @@ from std_msgs.msg import Float64
 
 bw = back_wheels.Back_Wheels()
 fw = front_wheels.Front_Wheels()
-pan_servo = Servo.Servo(1)
-tilt_servo = Servo.Servo(2)
+pan_servo = Servo.Servo(2)
+tilt_servo = Servo.Servo(1)
 picar.setup()
 
 # Keep unused servos at static positions
@@ -20,7 +20,7 @@ pan_servo.write(45)
 tilt_servo.write(90)
 
 # Constant for motor dead zone (Value range where movement is mostly negligible)
-DEAD_ZONE = 20.0
+DEAD_ZONE = 10.0
 
 def fw_movement(data):
     curr_speed = data.data
@@ -34,9 +34,13 @@ def fw_movement(data):
             curr_speed = -1.0 * DEAD_ZONE
 
     if curr_speed > 0:
+        if curr_speed > 100:
+            curr_speed = 100
         bw.speed = int(round(curr_speed))
         bw.backward()
     elif curr_speed < 0:
+        if -curr_speed > 100:
+            curr_speed = -100
         bw.speed = int(round(-curr_speed))
         bw.forward()
     else:
@@ -57,7 +61,7 @@ def main():
     # run simultaneously.
     rospy.init_node('pi_car', anonymous=True)
 
-    rospy.Subscriber("control_spd", Float64, fw_movement)
+    rospy.Subscriber("/drv_vel", Float64, fw_movement)
 
     # spin() simply keeps python from exiting until this node is stopped
     rospy.spin()
